@@ -735,11 +735,14 @@ function App() {
                   const used = tasks.filter(a => a.period === i).reduce((s, a) => s + a.minutes, 0);
                   const totalCapacity = span(i);
                   const capacity = activityCapacity(totalCapacity, data.prayerMinutes);
+                  const remaining = Math.max(0, capacity - used);
+                  const remainingLabel = data.lang === "ar" ? "متبقٍ" : data.lang === "en" ? "remaining" : "restant";
                   const prayerEnd = times ? afterPrayer(times[name], data.prayerMinutes) : null;
                   return (
                     <article className={"period tone-" + i} key={name}>
                       <div className="period-label">
                         <Icon size={38} />
+                        <div className="period-details">
                         <h3>
                           {name} <span>→</span> {names[(i + 1) % 5]}
                         </h3>
@@ -749,6 +752,21 @@ function App() {
                             : "—"}
                         </p>
                         <small>{times ? `${format(capacity)} ${prayerLabels.available}` : "—"}</small>
+                        </div>
+                        <div className="ring-area">
+                          <div
+                            className="ring"
+                            role="img"
+                            aria-label={times ? `${format(remaining)} ${remainingLabel}` : "—"}
+                            title={times ? `${format(used)} / ${format(capacity)}` : "—"}
+                            style={{ background: `conic-gradient(var(--accent) ${capacity ? remaining / capacity * 360 : 0}deg, var(--ring-track) 0deg)` }}
+                          >
+                            <div>
+                              <strong>{times ? format(remaining) : "—"}</strong>
+                              <small>{remainingLabel}</small>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div className="period-content">
                         <h3>
@@ -774,37 +792,12 @@ function App() {
                           <span className="reserved-duration">{format(data.prayerMinutes)}</span>
                         </div>
                         {times && data.prayerMinutes > totalCapacity && <p className="overbook">{prayerLabels.tooLong}</p>}
+                        {times && used > capacity && <p className="overbook">{data.lang === "ar" ? "تجاوز سعة الفترة" : data.lang === "en" ? "Over capacity" : "Période surchargée"}</p>}
                         <div>{group.map((a) => taskRow(a))}</div>
                         <button className="add-activity" onClick={() => add(i)}>
                           <Plus size={15} />
                           {t(7)}
                         </button>
-                      </div>
-                      <div className="ring-area">
-                        <div
-                          className="ring"
-                          style={{
-                            background: `conic-gradient(var(--accent) ${capacity ? Math.min(used / capacity, 1) * 360 : 0}deg, var(--ring-track) 0deg)`,
-                          }}
-                        >
-                          <div>
-                            <strong>{format(used)}</strong>
-                            <small>
-                              {times
-                                ? `${data.lang === "ar" ? "من" : "/"} ${format(capacity)}`
-                                : "—"}
-                            </small>
-                          </div>
-                        </div>
-                        {times && used > capacity && (
-                          <small className="overbook">
-                            {data.lang === "ar"
-                              ? "تجاوز سعة الفترة"
-                              : data.lang === "fr"
-                                ? "Période surchargée"
-                                : "Over capacity"}
-                          </small>
-                        )}
                       </div>
                     </article>
                   );

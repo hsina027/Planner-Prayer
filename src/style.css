@@ -1566,3 +1566,46 @@ header .header-theme-toggle:hover {background:#fffdf1;}
 @media (max-width: 760px) {
   [dir="rtl"] .prayer-line { left: 8px; right: 8px; }
 }
+
+/* Prayer headers keep the available-time indicator beside the prayer names. */
+.period { display: grid; grid-template-columns: minmax(0, 1fr); }
+.period-label { width: 100%; display: grid; grid-template-columns: 38px minmax(0, 1fr) 84px; gap: 12px; align-items: center; justify-items: stretch; padding: 14px; text-align: start; }
+.period-label > svg { grid-row: auto; margin: 0; }
+.period-details { min-width: 0; }
+.period-label h3 { font-size: 16px; line-height: 1.4; }
+.period-label p { font-size: 13px; margin: 4px 0; }
+.period-label small { font-size: 12px; }
+.period-label .ring-area { width: 84px; padding: 0; display: flex; justify-content: center; }
+.period-label .ring { width: 84px; height: 84px; }
+.period-label .ring > div { width: 70px; height: 70px; color: var(--text); }
+.period-label .ring strong { font-size: 13px; }
+.period-label .ring small { color: var(--muted); font-size: 11px; }
+.add-activity { background: #166b59; border: 1px solid #166b59; color: #ffffff; font-weight: 600; font-size: 13px; padding: 9px 13px; min-height: 44px; }
+.add-activity:hover { background: #115443; }
+.dark .add-activity { background: #9ce5ce; border-color: #9ce5ce; color: #12392f; }
+.dark .add-activity:hover { background: #bcf3e1; }
+.right-column .panel h3 { font-size: 16px; }
+.right-column .panel-title { flex-wrap: wrap; }
+.right-column .panel-title .muted { font-size: 12px; }
+.mini-calendar small { font-size: 12px; }
+.mini-calendar button { font-size: 14px; min-height: 36px; }
+.progress-caption, .category-summary { font-size: 14px; }
+.category-summary small { font-size: 13px; }
+.category-summary { padding: 9px 0; }
+.recurring-small > div { min-width: 0; font-size: 14px; overflow-wrap: anywhere; }
+.recurring-small small { font-size: 13px; line-height: 1.5; }
+.right-column .text-link { font-size: 13px; }
+@media (max-width: 760px) {
+  .period-label { grid-template-columns: 32px minmax(0, 1fr) 76px; gap: 8px; padding: 12px; }
+  .period-label > svg { width: 32px; height: 32px; }
+  .period-label .ring-area { width: 76px; }
+  .period-label .ring { width: 76px; height: 76px; }
+  .period-label .ring > div { width: 64px; height: 64px; }
+  .period-label h3 { font-size: 15px; }
+  .right-column .panel h3 { font-size: 18px; }
+  .mini-calendar button { min-height: 44px; font-size: 16px; }
+  .mini-calendar small { font-size: 13px; }
+  .progress-caption, .category-summary { font-size: 15px; }
+  .recurring-small > div { font-size: 15px; }
+  .right-column .panel-title .muted, .right-column .text-link { font-size: 14px; }
+}
